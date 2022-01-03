@@ -1,9 +1,10 @@
-import { data } from './data';
+import { data, categoryNames } from './data';
 import { useState } from 'react';
 import { getSums } from './func'
 
 function App() {
   const [value, setValue] = useState(0);
+  const [points, setPoints] = useState(null);
   return (
     <section>
       <h1>Анкета</h1>
@@ -24,7 +25,6 @@ function App() {
                   <li>{k.question}</li>
                   <input type="number" max="11" min="0" id={k.category} onChange={(event) => {
                     setValue(k.points = +event.target.value)
-                    
                   }} />
                 </ul>
               )
@@ -32,8 +32,16 @@ function App() {
           </div>
         )
       })}
-      <button onClick={() => getSums(data)}>Get</button>
-      <span>Your sum is: 0</span>
+      <button onClick={() => setPoints(getSums(data))}>Get</button>
+      <div>
+      {categoryNames.map((el, i) => {
+        return (
+          <ul>
+            <li>{categoryNames[i]}: {points ? points[i].reduce((a, b) => a + b) : null}</li>
+          </ul>
+        )
+      })}
+      </div>
     </section>
   );
 }

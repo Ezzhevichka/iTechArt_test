@@ -22,8 +22,13 @@ section h1 {
     text-align: center;
 }
 
-section:last-child span{
-    text-align: center;
+section ul input {
+    width: 200px;
+}
+
+section:last-child span {
+    margin-top: 15px;
+    align-self: center;
 }
 
 section:first-child input {
@@ -38,10 +43,11 @@ section p {
 section button {
     align-self: center;
     justify-self: center;
-    max-width: 250px;
+    width: 250px;
     height: 40px;
 }
 
 ul li::first-letter {
+    font-size: 20px;
     text-transform: uppercase;
 }
