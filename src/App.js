@@ -25,7 +25,6 @@ function App() {
                   <li>{k.question}</li>
                   <input type="number" max="11" min="0" id={k.category} onChange={(event) => {
                     setValue(event.target.value > 11 ? event.target.value = k.points = 11 : k.points = +event.target.value)
-                    console.log(k.points);
                   }} />
                 </ul>
               )
