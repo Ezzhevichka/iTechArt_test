@@ -6,10 +6,21 @@ function getSums(x) {
         let sum = 0;
         arr.push(x[i].cases);
         for (let j = 0; j < x[i].cases.length; j++) {
-            sum += x[i].cases[j].points;
+            if (x[i].cases[j].points === undefined) {
+                x[i].cases[j].points = 0;
+            } else {
+                sum += x[i].cases[j].points;
+            }
         };
 
-        if (sum > 11 || sum < 11) alert(`Вы неточно распределили баллы в вопросе ${i + 1}. Проверьте свои значения!`)
+        let element = document.getElementById(x[i].id);
+
+        if (sum > 11 || sum < 11) {
+            element.scrollIntoView({ block: "center", behavior: "smooth" });
+            element.style.color = "red";
+        } else {
+            element.style.color = "black";
+        }
     };
 
     arr = arr.flat().sort((a, b) => a.category - b.category);
@@ -18,11 +29,12 @@ function getSums(x) {
         points.push(arr.filter(el => el.category === i).map(el => el.points));
     };
 
-    if (points.flat().includes(undefined)) {
-        alert('Вы ввели не все значения на странице!');
+    if (points.flat().reduce((a, b) => a + b) < 363 || points.flat().reduce((a, b) => a + b) > 363) {
+        console.log(points.flat().reduce((a, b) => a + b))
+        return null;
     } else {
         return points;
-    };
+    }
 };
 
 function getData(x, y) {
@@ -168,13 +180,15 @@ function getPolarData(x, y) {
 function getRest(x) {
     x.total = 11;
     let rest = x.total = x.total - x.cases.map(a => a.points).reduce((a, b) => {
-        if (a === undefined) {
+        if (a === undefined && b === undefined) {
+            return Number(Boolean(a)) + Number(Boolean(b));
+        } else if (a === undefined) {
             return Number(Boolean(a)) + b;
         } else if (b === undefined) {
-            return a + Number(Boolean(b));
+            return Number(Boolean(b)) + a;
         } else {
-            return a + b
-        }
+            return a + b;
+        };
     });
     return rest;
 };
